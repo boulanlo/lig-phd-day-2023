@@ -1,11 +1,72 @@
+% -*- eval: (load-file "./autoloader.el")  -*-
+
 \documentclass[25pt, a0paper, portrait]{tikzposter}
-\title{Title}
-\author{\underline{Louis Boulanger}, Frédéric Wagner, Yves Denneulin}
+\title{\parbox{\linewidth}{\centering Taenite: Transparent Persistent Memory Management Library in Rust}}
+\author{Louis Boulanger, Frédéric Wagner, Yves Denneulin}
 \institute{Univ. Grenoble Alpes, CNRS, Inria, Grenoble INP, LIG}
 
+\usepackage[T1]{fontenc}
+
+% Arial-like font, Helvetica
+\usepackage{helvet}
+
+% \Huge isn't enough. First argument to \fontsize is the size, second is spacing (should be 1.2x font size)
+\newcommand*{\HUGE}{\fontsize{80}{96}\selectfont}
+
+% Title style
+\definetitlestyle{LIG}{
+  width=0.9\paperwidth, roundedcorners=0, 
+}{
+  \begin{scope}[line width=\titlelinewidth, rounded corners=\titleroundedcorners]
+  \end{scope}
+}
+
+% Color palette and style
+\definecolorstyle{LIGStyle}{
+  \definecolor{LIGBlue}{cmyk}{0.85,0.6,0.12,0}
+  \definecolor{LIGLightBlue}{cmyk}{0.82,0.46,0,0}
+  \definecolor{LIGGray}{cmyk}{0.64,0.54,0.52,0.52}
+}{
+  \colorlet{backgroundcolor}{white}
+  \colorlet{framecolor}{white}
+  \colorlet{titlefgcolor}{white}
+  \colorlet{titlebgcolor}{LIGBlue}
+  \colorlet{blocktitlebgcolor}{LIGBlue}
+  \colorlet{blocktitlefgcolor}{white}
+  \colorlet{blockbodybgcolor}{white}
+  \colorlet{blockbodyfgcolor}{black}
+}
+\usecolorstyle{LIGStyle}
+
+
+% Title format
+\settitle{
+  \vspace{-8mm}
+  \centering\color{titlefgcolor}{\textbf{\HUGE \sffamily \@title}}
+  
+  {
+    \vspace{30mm}
+    \color{blockbodyfgcolor}{\LARGE \sffamily \@author \par}
+    \vspace{1em}
+    \color{blockbodyfgcolor}{\Large \sffamily \@institute \par}
+  }
+}
+
+\usetitlestyle{LIG}
+
 \begin{document}
+% Add LIG template png as background image
+\node[above right,opacity=1,inner sep=0pt,outer sep=0pt] at (bottomleft) {\includegraphics[width=\paperwidth,height=\paperheight]{template}};
 
 \maketitle
+
+% Amazingly, tikzposter doesn't define "topleft" and "bottomright".
+\coordinate (topleft)     at (topright -| bottomleft);
+\coordinate (bottomright) at (topright |- bottomleft);
+
+% Bar to separate authors from contents.
+% Default tikz units are in cm, and A0 is 84.1cmx118.9cm. (0, 0) is the center of the page.
+\draw[black, thick, line width=2mm, color=LIGBlue] (-42.05, 43) -- (42.05, 43);
 
 
 \end{document}

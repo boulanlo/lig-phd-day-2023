@@ -10,11 +10,11 @@
         pkgs = import nixpkgs { inherit system; };
         tex = pkgs.texlive.combine {
           inherit (pkgs.texlive) scheme-basic latex-bin latexmk xetex
-          pgf tikzposter xkeyval xstring etoolbox extsizes a0poster; 
+          pgf tikzposter xkeyval xstring etoolbox extsizes a0poster helvetic; 
         };
         source-tex-file = "poster.tex";
         target-pdf-file = "poster.pdf";
-        buildInputs = [ pkgs.coreutils tex pkgs.python39 pkgs.python39Packages.pygments pkgs.which ];
+        buildInputs = [ pkgs.coreutils tex pkgs.python39 pkgs.python39Packages.pygments pkgs.which pkgs.ncurses ];
       in
         rec {
           packages = {
