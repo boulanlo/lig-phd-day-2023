@@ -9,17 +9,11 @@
 
 % Arial-like font, Helvetica
 \usepackage{helvet}
+\renewcommand\familydefault{\sfdefault}
+
 
 % \Huge isn't enough. First argument to \fontsize is the size, second is spacing (should be 1.2x font size)
 \newcommand*{\HUGE}{\fontsize{80}{96}\selectfont}
-
-% Title style
-\definetitlestyle{LIG}{
-  width=0.9\paperwidth, roundedcorners=0, 
-}{
-  \begin{scope}[line width=\titlelinewidth, rounded corners=\titleroundedcorners]
-  \end{scope}
-}
 
 % Color palette and style
 \definecolorstyle{LIGStyle}{
@@ -31,13 +25,20 @@
   \colorlet{framecolor}{white}
   \colorlet{titlefgcolor}{white}
   \colorlet{titlebgcolor}{LIGBlue}
-  \colorlet{blocktitlebgcolor}{LIGBlue}
-  \colorlet{blocktitlefgcolor}{white}
+  \colorlet{blocktitlebgcolor}{white}
+  \colorlet{blocktitlefgcolor}{LIGBlue}
   \colorlet{blockbodybgcolor}{white}
   \colorlet{blockbodyfgcolor}{black}
 }
 \usecolorstyle{LIGStyle}
 
+% Title style
+\definetitlestyle{LIGTitle}{
+  width=0.9\paperwidth, roundedcorners=0, 
+}{
+  \begin{scope}[line width=\titlelinewidth, rounded corners=\titleroundedcorners]
+  \end{scope}
+}
 
 % Title format
 \settitle{
@@ -52,7 +53,18 @@
   }
 }
 
-\usetitlestyle{LIG}
+% Block style
+\defineblockstyle{LIGBlock}{
+  bodywidthscale=1
+}{
+  \ifBlockHasTitle
+  \draw [line width=1mm] (blockbody.north west) -- (blockbody.north east);
+  \fi
+}
+
+
+\usetitlestyle{LIGTitle}
+\useblockstyle{LIGBlock}
 
 \begin{document}
 % Add LIG template png as background image
@@ -68,5 +80,36 @@
 % Default tikz units are in cm, and A0 is 84.1cmx118.9cm. (0, 0) is the center of the page.
 \draw[black, thick, line width=2mm, color=LIGBlue] (-42.05, 43) -- (42.05, 43);
 
+\begin{columns}
+  \column{0.5}
+  \block{Persistent memory is challenging}{
+    What is persistent memory and why is it difficult to use it to its full potential. Small picture of a DIMM?
+  }
+  \block{Immutable data structures for persistent storage}{
+    Explaining quickly immutable data structures with tree-like topology, a little figure of a linked list with it.
+  }
+  
+  \block{Rust, a systems programming language}{
+    Small Rust code listing, explain structs, traits and mutability.
+  }
+  \block{Our goal}{
+    Log-less, transaction-based, transparent persistent memory library with intuitive API
+  }
+
+  \column{0.5}
+  \block{A single-threaded persistent memory allocator}{
+    Memory block figure, with all the situations we can encounter
+  }
+  \block{Persistent Rust standard library types}{
+    PBox, PVec, and how they work (copy when deref mut), with figure
+  }
+  \block{A persistent Hitchhiker Tree data structure}{
+    A figure with a small tree and little text that says we have the two (std and nvram) versions?
+  }
+  \block{Interior mutability in a persistent context}{
+    How we use HHTree to allow interior mutability and keep tree-like topology transparently for the user
+  }
+  
+\end{columns}
 
 \end{document}
